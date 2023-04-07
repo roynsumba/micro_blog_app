@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %} {% block content %}
+<h1>Tweets</h1>
+<a href="{% url 'core:create_tweet' %}">Create a new tweet</a>
+<ul>
+  {% for tweet in tweets %}
+  <li>
+    <a href="{% url 'core:user_profile' tweet.user.username %}"
+      >{{ tweet.user.username }}</a
+    >: {{ tweet.content }}
+  </li>
+  {% endfor %}
+</ul>
+<div class="pagination">
+  <span class="step-links">
+    {% if tweets.has_previous %}
+    <a href="?page=1">&laquo; first</a>
+    <a href="?page={{ tweets.previous_page_number }}">previous</a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ tweets.number }} of {{ tweets.paginator.num_pages }}.
+    </span>
+
+    {% if tweets.has_next %}
+    <a href="?page={{ tweets.next_page_number }}">next</a>
+    <a href="?page={{ tweets.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+  </span>
+</div>
+{% endblock %}

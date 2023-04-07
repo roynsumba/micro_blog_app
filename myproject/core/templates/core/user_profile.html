@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %} {% block content %}
+<h1>{{ user_profile.username }}'s Profile</h1>
+<p>{{ user_profile.userprofile.bio }}</p>
+{% if not is_following and request.user != user_profile %}
+<a href="{% url 'core:follow' user_profile.id %}">Follow</a>
+{% elif is_following %}
+<a href="{% url 'core:unfollow' user_profile.id %}">Unfollow</a>
+{% endif %}
+<h2>Tweets</h2>
+<ul>
+  {% for tweet in tweets %}
+  <li>{{ tweet.content }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
